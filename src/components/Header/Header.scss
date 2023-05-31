@@ -1,0 +1,9 @@
+.header {
+  &__link {
+    padding-right: 40px;
+    transition-duration: 1s;
+    &:hover {
+      font-weight: 700;
+    }
+  }
+}

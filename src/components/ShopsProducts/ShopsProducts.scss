@@ -1,0 +1,14 @@
+.shopProducts {
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  &__product {
+    width: 46%;
+    height: auto;
+  }
+}
