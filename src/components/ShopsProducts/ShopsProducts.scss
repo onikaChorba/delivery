@@ -6,9 +6,41 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
 
-  &__product {
-    width: 46%;
-    height: auto;
+.product {
+  width: 40%;
+  height: auto;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid grey;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  &__img {
+    width: 98%;
+    height: 220px;
+    background: grey;
+    border-radius: 5px;
+  }
+  &__name {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: left;
+  }
+  &__button {
+    width: 50%;
+    height: 50px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    align-self: flex-end;
+    transition-duration: 2s;
+    &:hover {
+      background: rgb(85, 84, 84);
+      color: white;
+    }
   }
 }

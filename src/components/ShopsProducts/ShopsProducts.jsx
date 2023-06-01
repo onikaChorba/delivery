@@ -1,21 +1,15 @@
 import React from "react";
-import Product from "../Product/Product";
 import "./ShopsProducts.scss";
-export default function ShopsProducts() {
+export default function ShopsProducts({ products }) {
   return (
     <div className="shopProducts">
-      <div className="shopProducts__product">
-        <Product />
-      </div>{" "}
-      <div className="shopProducts__product">
-        <Product />
-      </div>{" "}
-      <div className="shopProducts__product">
-        <Product />
-      </div>{" "}
-      <div className="shopProducts__product">
-        <Product />
-      </div>
+      {products.map((product) => (
+        <div key={product.id} className="product">
+          <div className="product__img"></div>
+          <h3 className="product__name">Product Name</h3>
+          <button className="product__button">Add card</button>
+        </div>
+      ))}
     </div>
   );
 }
