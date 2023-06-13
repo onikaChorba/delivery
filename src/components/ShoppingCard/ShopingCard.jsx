@@ -1,16 +1,17 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import "./ShopingCard.scss";
+
 export default function ShopingCard({ cartItems }) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
 
   const handleIncrease = () => {
-    setValue(value + 1);
+    setValue((prevValue) => prevValue + 1);
   };
 
   const handleDecrease = () => {
-    setValue(value - 1);
+    setValue((prevValue) => (prevValue > 1 ? prevValue - 1 : 1));
   };
+
   return (
     <div className="shopingCard">
       <div className="shopingCardBlock">
@@ -34,7 +35,12 @@ export default function ShopingCard({ cartItems }) {
                   {item.name}
                   <div>
                     <button onClick={handleIncrease}>+</button>
-                    <input type="number" value={value} readOnly />
+                    <input
+                      type="number"
+                      value={value}
+                      readOnly
+                      className="quantityInput"
+                    />
                     <button onClick={handleDecrease}>-</button>
                   </div>
                 </li>
@@ -43,11 +49,11 @@ export default function ShopingCard({ cartItems }) {
           )}
         </div>
       </div>
-      <div>
+      <div className="shopingCard__total">
         <div>
           Total price: <span>10000</span>
         </div>
-        <button>Submit</button>
+        <button className="submitBtn">Submit</button>
       </div>
     </div>
   );

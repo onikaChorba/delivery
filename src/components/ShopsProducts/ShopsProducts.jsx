@@ -4,10 +4,15 @@ import "./ShopsProducts.scss";
 
 export default function ShopsProducts({ products }) {
   const [cartItems, setCartItems] = useState([]);
+
   const addToCart = (product) => {
     setCartItems([...cartItems, product]);
-    console.log("k");
+    console.log("Product added to cart:", product);
+    console.log("Updated cart items:", cartItems);
   };
+
+  console.log("Received products:", products);
+
   return (
     <div className="shopProducts">
       {products.map((product) => (
@@ -18,7 +23,7 @@ export default function ShopsProducts({ products }) {
             className="product__button"
             onClick={() => addToCart(product)}
           >
-            Add card
+            Add to Cart
           </button>
         </div>
       ))}

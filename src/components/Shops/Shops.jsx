@@ -1,6 +1,6 @@
 import React from "react";
 import "./Shops.scss";
-export default function Shops({ stores, onSelectStore, setSelectedStore }) {
+export default function Shops({ stores, onSelectStore }) {
   const handleStoreClick = (store) => {
     onSelectStore(store.id);
   };

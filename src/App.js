@@ -6,6 +6,7 @@ import ShopingCards from "./sections/ShopingCards/ShopingCards";
 import { Header } from "../src/components/Header/Header";
 function App() {
   const [selectedStoreId, setSelectedStoreId] = useState(null);
+  const [selectedProducts, setSelectedProducts] = useState([]);
 
   const handleSelectStore = (storeId) => {
     setSelectedStoreId(storeId);
@@ -89,6 +90,13 @@ function App() {
       ],
     },
   ];
+
+  const handleAddToCart = (product) => {
+    setSelectedProducts((prevSelectedProducts) => [
+      ...prevSelectedProducts,
+      product,
+    ]);
+  };
   return (
     <div className="App">
       <Router>
@@ -106,7 +114,15 @@ function App() {
                 />
               }
             />
-            <Route path="/shoppingCards" element={<ShopingCards />} />
+            <Route
+              path="/shoppingCards"
+              element={
+                <ShopingCards
+                  selectedProducts={selectedProducts}
+                  handleAddToCart={handleAddToCart}
+                />
+              }
+            />
           </Routes>
         </div>
       </Router>
