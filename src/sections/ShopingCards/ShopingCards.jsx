@@ -1,10 +1,17 @@
 import ShopingCard from "../../components/ShoppingCard/ShopingCard";
+import { useState } from "react";
 
-function ShopingCards() {
+function ShopingCards({ products }) {
+  const [cartItems, setCartItems] = useState([]);
   return (
     <div>
-      <ShopingCard />
+      <ShopingCard
+        products={products}
+        cartItems={cartItems}
+        setCartItems={setCartItems}
+      />
     </div>
   );
 }
+
 export default ShopingCards;

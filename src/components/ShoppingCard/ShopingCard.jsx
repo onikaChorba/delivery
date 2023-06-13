@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./ShopingCard.scss";
-export default function ShopingCard() {
+export default function ShopingCard({ cartItems }) {
   const [value, setValue] = useState(0);
 
   const handleIncrease = () => {
@@ -13,34 +13,34 @@ export default function ShopingCard() {
   };
   return (
     <div className="shopingCard">
-      <div>
-        <div>
-          <div className="shopingCard__user">
-            <form>
-              <label>Name:</label>
-              <input type="text" />
-              <label>Email:</label>
-              <input type="email" />
-              <label>Phone:</label>
-              <input type="phone" />
-              <label>Address:</label>
-              <input type="text" />
-            </form>
-          </div>
-          <div className="shopingCard__selectProduct">
-            <div>img </div>
-            <div>
-              <div> name</div>
-              <div>
-                Price: <span>Number</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <button onClick={handleIncrease}>+</button>
-          <input type="number" value={value} readOnly />
-          <button onClick={handleDecrease}>-</button>
+      <div className="shopingCardBlock">
+        <form className="shopingCard__user">
+          <label className="userLabel">Name:</label>
+          <input type="text" className="userInput" />
+          <label className="userLabel">Email:</label>
+          <input type="email" className="userInput" />
+          <label className="userLabel">Phone:</label>
+          <input type="phone" className="userInput" />
+          <label className="userLabel">Address:</label>
+          <input type="text" className="userInput" />
+        </form>
+        <div className="shopingCard__selectProduct">
+          {cartItems.length === 0 ? (
+            <p>Your cart is empty.</p>
+          ) : (
+            <ul>
+              {cartItems.map((item) => (
+                <li key={item.id}>
+                  {item.name}
+                  <div>
+                    <button onClick={handleIncrease}>+</button>
+                    <input type="number" value={value} readOnly />
+                    <button onClick={handleDecrease}>-</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
       <div>
