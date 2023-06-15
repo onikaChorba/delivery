@@ -2,11 +2,9 @@ import "./App.scss";
 import { useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Shop from "./sections/Shop/Shop";
-import ShopingCards from "./sections/ShopingCards/ShopingCards";
 import { Header } from "../src/components/Header/Header";
 function App() {
   const [selectedStoreId, setSelectedStoreId] = useState(null);
-  const [selectedProducts, setSelectedProducts] = useState([]);
 
   const handleSelectStore = (storeId) => {
     setSelectedStoreId(storeId);
@@ -91,12 +89,6 @@ function App() {
     },
   ];
 
-  const handleAddToCart = (product) => {
-    setSelectedProducts((prevSelectedProducts) => [
-      ...prevSelectedProducts,
-      product,
-    ]);
-  };
   return (
     <div className="App">
       <Router>
@@ -111,15 +103,6 @@ function App() {
                   selectedStoreId={selectedStoreId}
                   handleSelectStore={handleSelectStore}
                   getSelectedStore={getSelectedStore}
-                />
-              }
-            />
-            <Route
-              path="/shoppingCards"
-              element={
-                <ShopingCards
-                  selectedProducts={selectedProducts}
-                  handleAddToCart={handleAddToCart}
                 />
               }
             />
