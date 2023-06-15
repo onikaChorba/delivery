@@ -21,9 +21,12 @@ export default function ShopingCard({ cartItems }) {
           ) : (
             <ul>
               {cartItems.map((item) => (
-                <li key={item.id}>
-                  {item.name}
+                <li key={item.id} className="selectProduct__block">
                   <div>
+                    <div className="selectProduct__img2"></div>
+                    {item.name}
+                  </div>
+                  <div className="selectProduct__quantity">
                     <button onClick={handleIncrease}>+</button>
                     <input
                       type="number"
@@ -35,14 +38,11 @@ export default function ShopingCard({ cartItems }) {
                   </div>
                 </li>
               ))}
+              <div>
+                Total price: <span>10000</span>
+              </div>
             </ul>
           )}
-        </div>
-        <div className="shopingCard__total">
-          <div>
-            Total price: <span>10000</span>
-          </div>
-          <button className="submitBtn">Submit</button>
         </div>
       </div>
       <form className="shopingCard__user">
@@ -55,6 +55,10 @@ export default function ShopingCard({ cartItems }) {
         <label className="userLabel">Address:</label>
         <input type="text" className="userInput" />
       </form>
+
+      <div className="shopingCard__total">
+        <button className="submitBtn">Submit</button>
+      </div>
     </div>
   );
 }

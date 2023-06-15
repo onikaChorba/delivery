@@ -1,23 +1,24 @@
 .shopingCard {
-  padding: 1rem;
+  margin-right: 1rem;
+  margin-top: 3rem;
   &__user {
-    width: 43%;
-    border: 1px solid grey;
-    border-radius: 10px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-  }
-  &__selectProduct {
-    width: 43%;
     border: 1px solid grey;
     border-radius: 10px;
     padding: 1rem;
     margin-bottom: 2rem;
   }
+  &__selectProduct {
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+  &__total {
+    padding-bottom: 1rem;
+  }
 }
 .shopingCardBlock {
   width: 100%;
-  height: 70vh;
 }
 .userLabel {
   font-size: 18px;
@@ -32,4 +33,30 @@
   width: 100%;
   height: 40px;
   margin-top: 1rem;
+}
+.submitBtn {
+  width: 100%;
+  margin-top: 1rem;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 20px;
+  font-weight: 700;
+}
+.selectProduct {
+  &__block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__img2 {
+    background: goldenrod;
+    height: 50px;
+  }
+  &__quantity {
+    width: 45%;
+  }
+}
+.quantityInput {
+  width: 30%;
 }

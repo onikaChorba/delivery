@@ -11,7 +11,7 @@ export default function ShopsProducts({ products }) {
 
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div className="shopProducts" style={{ width: "70%" }}>
+      <div className="shopProducts" style={{ width: "67%" }}>
         {products.map((product) => (
           <div key={product.id} className="product">
             <div className="product__img"></div>
@@ -25,7 +25,7 @@ export default function ShopsProducts({ products }) {
           </div>
         ))}
       </div>
-      <div style={{ width: "28%" }}>
+      <div style={{ width: "23%" }}>
         <ShopingCard cartItems={cartItems} />
       </div>
     </div>
