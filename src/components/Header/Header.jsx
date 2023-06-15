@@ -8,9 +8,7 @@ export const Header = () => {
       <NavLink to="/" className="header__link">
         Shop
       </NavLink>
-      <NavLink to="/shoppingCards" className="header__link">
-        Shoping Card
-      </NavLink>
+      <button>Shopping Cart </button>
     </div>
   );
 };

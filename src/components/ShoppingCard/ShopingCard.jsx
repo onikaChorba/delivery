@@ -15,16 +15,6 @@ export default function ShopingCard({ cartItems }) {
   return (
     <div className="shopingCard">
       <div className="shopingCardBlock">
-        <form className="shopingCard__user">
-          <label className="userLabel">Name:</label>
-          <input type="text" className="userInput" />
-          <label className="userLabel">Email:</label>
-          <input type="email" className="userInput" />
-          <label className="userLabel">Phone:</label>
-          <input type="phone" className="userInput" />
-          <label className="userLabel">Address:</label>
-          <input type="text" className="userInput" />
-        </form>
         <div className="shopingCard__selectProduct">
           {cartItems.length === 0 ? (
             <p>Your cart is empty.</p>
@@ -48,13 +38,23 @@ export default function ShopingCard({ cartItems }) {
             </ul>
           )}
         </div>
-      </div>
-      <div className="shopingCard__total">
-        <div>
-          Total price: <span>10000</span>
+        <div className="shopingCard__total">
+          <div>
+            Total price: <span>10000</span>
+          </div>
+          <button className="submitBtn">Submit</button>
         </div>
-        <button className="submitBtn">Submit</button>
       </div>
+      <form className="shopingCard__user">
+        <label className="userLabel">Name:</label>
+        <input type="text" className="userInput" />
+        <label className="userLabel">Email:</label>
+        <input type="email" className="userInput" />
+        <label className="userLabel">Phone:</label>
+        <input type="phone" className="userInput" />
+        <label className="userLabel">Address:</label>
+        <input type="text" className="userInput" />
+      </form>
     </div>
   );
 }
