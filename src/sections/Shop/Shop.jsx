@@ -9,10 +9,10 @@ export default function Shop({
 }) {
   return (
     <div className="shopBlock">
-      <div style={{ width: "28%" }}>
+      <div style={{ width: "20%" }}>
         <Shops stores={stores} onSelectStore={handleSelectStore} />
       </div>
-      <div style={{ width: "70%" }}>
+      <div style={{ width: "78%" }}>
         {selectedStoreId && (
           <ShopsProducts products={getSelectedStore().products} />
         )}
