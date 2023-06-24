@@ -1,22 +1,44 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Shops.scss";
 import { fetchСlothes } from "../../store/clothesSlice";
+import { fetchBurgers } from "../../store/burgersSlice";
+
 export default function Shops() {
   const dispatch = useDispatch();
-  const clothes = useSelector((state) => state.clothes);
+  const { data: clothes, isLoading: clothesLoading } = useSelector(
+    (state) => state.clothes
+  );
   const [showСlothes, setShowСlothes] = useState(false);
+  const { data: burgers, isLoading: burgersLoading } = useSelector(
+    (state) => state.burgers
+  );
+  const [showBurgers, setShowBurgers] = useState(false);
 
   useEffect(() => {
     dispatch(fetchСlothes());
+    dispatch(fetchBurgers());
   }, [dispatch]);
 
   const handleButtonClick = () => {
-    setShowСlothes((prevShowСlothes) => !prevShowСlothes);
+    setShowСlothes((prevShowСlothes) => {
+      if (prevShowСlothes) {
+        setShowBurgers(false);
+      }
+      return !prevShowСlothes;
+    });
   };
 
-  if (clothes.isLoading) {
+  const handleButtonClick1 = () => {
+    setShowBurgers((prevShowBurgers) => {
+      if (prevShowBurgers) {
+        setShowСlothes(false);
+      }
+      return !prevShowBurgers;
+    });
+  };
+
+  if (clothesLoading || burgersLoading) {
     return <h1>Loading....</h1>;
   }
 
@@ -24,29 +46,37 @@ export default function Shops() {
     <div className="mainBlock">
       <div className="mainBlock__shops">
         <h1 className="shops__title">Shops:</h1>
-        <button onClick={handleButtonClick} className="shops__name">
-          Сlothes
-        </button>
+        <div className="shops__button">
+          <button onClick={handleButtonClick} className="shops__name">
+            Сlothes
+          </button>
+          <button className="shops__name" onClick={handleButtonClick1}>
+            Burgers
+          </button>
+        </div>
       </div>
       <div className="mainBlock__products">
         <div className="shopProducts">
-          {showСlothes &&
-            clothes.data?.map((cloth) => (
-              <div key={cloth.id} className="product">
-                <img
-                  className="product__img"
-                  src={cloth.image}
-                  alt={cloth.id}
-                ></img>
-                <h3 className="product__name">{cloth.title}</h3>
-                <p>
-                  <b>Price:</b> <span>{cloth.price}</span>
-                </p>
-                <button className="product__button">Add to Cart</button>
-              </div>
-            ))}
+          {showСlothes && renderProducts(clothes)}
+          {showBurgers && renderProducts(burgers)}
         </div>
       </div>
     </div>
   );
+}
+function renderProducts(items) {
+  return items?.map((item) => (
+    <div key={item.id} className="product">
+      <img
+        className="product__img"
+        src={item.image || item.img}
+        alt={item.id}
+      ></img>
+      <h3 className="product__name">{item.title || item.name}</h3>
+      <p>
+        <b>Price:</b> <span>{item.price}</span>
+      </p>
+      <button className="product__button">Add to Cart</button>
+    </div>
+  ));
 }
