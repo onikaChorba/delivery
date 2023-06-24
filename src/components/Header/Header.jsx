@@ -4,10 +4,11 @@ import "./Header.scss";
 
 export const Header = () => {
   return (
-    <div className="header">
-      <NavLink to="/" className="header__link">
+    <div className="header header__link">
+      Delivery
+      {/* <NavLink to="/" className="header__link">
         Delivery
-      </NavLink>
+      </NavLink> */}
     </div>
   );
 };
