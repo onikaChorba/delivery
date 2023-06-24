@@ -6,7 +6,7 @@ export const Header = () => {
   return (
     <div className="header">
       <NavLink to="/" className="header__link">
-        Shop
+        Delivery
       </NavLink>
     </div>
   );
