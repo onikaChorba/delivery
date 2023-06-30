@@ -4,6 +4,7 @@ import "./Shops.scss";
 import { fetchСlothes } from "../../store/clothesSlice";
 import { fetchBurgers } from "../../store/burgersSlice";
 import { fetchDrinks } from "../../store/drinksSlice";
+import { addToCart } from "../../store/cartSlice";
 
 export default function Shops() {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ export default function Shops() {
     (state) => state.drinks
   );
   const [showBurgers, setShowBurgers] = useState(false);
+  const { cartItems } = useSelector((state) => state.cart);
+  const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     dispatch(fetchСlothes());
@@ -30,6 +33,10 @@ export default function Shops() {
     setShowСlothes(category === "clothes");
     setShowBurgers(category === "burgers");
     setShowDrinks(category === "drinks");
+  };
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
   };
 
   if (clothesLoading || burgersLoading || drinksLoading) {
@@ -59,20 +66,24 @@ export default function Shops() {
           >
             Clothes
           </button>
+          <button className="shops__name" onClick={() => setShowCart(true)}>
+            Cart ({cartItems.length})
+          </button>
         </div>
       </div>
       <div className="mainBlock__products">
         <div className="shopProducts">
-          {showСlothes && renderProducts(clothes)}
-          {showBurgers && renderProducts(burgers)}
-          {showDrinks && renderProducts(drinks)}
+          {showСlothes && renderProducts(clothes, handleAddToCart)}
+          {showBurgers && renderProducts(burgers, handleAddToCart)}
+          {showDrinks && renderProducts(drinks, handleAddToCart)}
         </div>
       </div>
+      {showCart && <Cart cartItems={cartItems} />}
     </div>
   );
 }
 
-function renderProducts(items) {
+function renderProducts(items, handleAddToCart) {
   return items?.map((item) => (
     <div key={item.id} className="product">
       <img
@@ -84,7 +95,28 @@ function renderProducts(items) {
       <p>
         <b>Price:</b> <span>{item.price}</span>
       </p>
-      <button className="product__button">Add to Cart</button>
+      <button className="product__button" onClick={() => handleAddToCart(item)}>
+        Add to Cart
+      </button>
     </div>
   ));
+}
+
+function Cart({ cartItems }) {
+  return (
+    <div className="cart">
+      <h2>Cart</h2>
+      {cartItems.length === 0 ? (
+        <p>Cart is empty</p>
+      ) : (
+        <ul>
+          {cartItems.map((item) => (
+            <li key={item.id}>
+              {item.title || item.name} - {item.price}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
