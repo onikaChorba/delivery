@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Shops.scss";
 import { fetchСlothes } from "../../store/clothesSlice";
 import { fetchBurgers } from "../../store/burgersSlice";
+import { fetchDrinks } from "../../store/drinksSlice";
 
 export default function Shops() {
   const dispatch = useDispatch();
@@ -13,32 +14,25 @@ export default function Shops() {
   const { data: burgers, isLoading: burgersLoading } = useSelector(
     (state) => state.burgers
   );
+  const [showDrinks, setShowDrinks] = useState(false);
+  const { data: drinks, isLoading: drinksLoading } = useSelector(
+    (state) => state.drinks
+  );
   const [showBurgers, setShowBurgers] = useState(false);
 
   useEffect(() => {
     dispatch(fetchСlothes());
     dispatch(fetchBurgers());
+    dispatch(fetchDrinks());
   }, [dispatch]);
 
-  const handleButtonClick = () => {
-    setShowСlothes((prevShowСlothes) => {
-      if (prevShowСlothes) {
-        setShowBurgers(false);
-      }
-      return !prevShowСlothes;
-    });
+  const handleButtonClick = (category) => {
+    setShowСlothes(category === "clothes");
+    setShowBurgers(category === "burgers");
+    setShowDrinks(category === "drinks");
   };
 
-  const handleButtonClick1 = () => {
-    setShowBurgers((prevShowBurgers) => {
-      if (prevShowBurgers) {
-        setShowСlothes(false);
-      }
-      return !prevShowBurgers;
-    });
-  };
-
-  if (clothesLoading || burgersLoading) {
+  if (clothesLoading || burgersLoading || drinksLoading) {
     return <h1>Loading....</h1>;
   }
 
@@ -47,11 +41,23 @@ export default function Shops() {
       <div className="mainBlock__shops">
         <h1 className="shops__title">Shops:</h1>
         <div className="shops__button">
-          <button onClick={handleButtonClick} className="shops__name">
-            Сlothes
+          <button
+            className="shops__name"
+            onClick={() => handleButtonClick("drinks")}
+          >
+            Drinks
           </button>
-          <button className="shops__name" onClick={handleButtonClick1}>
+          <button
+            className="shops__name"
+            onClick={() => handleButtonClick("burgers")}
+          >
             Burgers
+          </button>
+          <button
+            className="shops__name"
+            onClick={() => handleButtonClick("clothes")}
+          >
+            Clothes
           </button>
         </div>
       </div>
@@ -59,11 +65,13 @@ export default function Shops() {
         <div className="shopProducts">
           {showСlothes && renderProducts(clothes)}
           {showBurgers && renderProducts(burgers)}
+          {showDrinks && renderProducts(drinks)}
         </div>
       </div>
     </div>
   );
 }
+
 function renderProducts(items) {
   return items?.map((item) => (
     <div key={item.id} className="product">
