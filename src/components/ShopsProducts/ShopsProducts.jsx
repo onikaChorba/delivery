@@ -25,7 +25,7 @@ export default function ShopsProducts({ products }) {
           </div>
         ))}
       </div>
-      <div style={{ width: "23%" }}>
+      <div>
         <ShopingCard cartItems={cartItems} />
       </div>
     </div>

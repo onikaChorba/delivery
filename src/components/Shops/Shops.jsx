@@ -5,6 +5,8 @@ import { fetchСlothes } from "../../store/clothesSlice";
 import { fetchBurgers } from "../../store/burgersSlice";
 import { fetchDrinks } from "../../store/drinksSlice";
 import { addToCart } from "../../store/cartSlice";
+import ShopingCard from "../ShoppingCard/ShopingCard";
+import { updateQuantity } from "../../store/cartSlice";
 
 export default function Shops() {
   const dispatch = useDispatch();
@@ -22,6 +24,7 @@ export default function Shops() {
   const [showBurgers, setShowBurgers] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
   const [showCart, setShowCart] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     dispatch(fetchСlothes());
@@ -43,42 +46,92 @@ export default function Shops() {
     return <h1>Loading....</h1>;
   }
 
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+  const filterProducts = (items) => {
+    if (searchQuery === "") {
+      return items;
+    }
+    return items.filter((item) => {
+      const title = item.title || item.name || "";
+      return title.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+  };
+  const handleQuantityChange = (productId, quantity) => {
+    dispatch(updateQuantity({ productId, quantity }));
+  };
   return (
-    <div className="mainBlock">
-      <div className="mainBlock__shops">
-        <h1 className="shops__title">Shops:</h1>
+    <div>
+      <div className="shops__search">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={handleSearchInputChange}
+        />
         <div className="shops__button">
           <button
-            className="shops__name"
-            onClick={() => handleButtonClick("drinks")}
+            className="cart-button"
+            onClick={() => setShowCart(!showCart)}
           >
-            Drinks
-          </button>
-          <button
-            className="shops__name"
-            onClick={() => handleButtonClick("burgers")}
-          >
-            Burgers
-          </button>
-          <button
-            className="shops__name"
-            onClick={() => handleButtonClick("clothes")}
-          >
-            Clothes
-          </button>
-          <button className="shops__name" onClick={() => setShowCart(true)}>
-            Cart ({cartItems.length})
+            Shopping Cart ({cartItems.length})
           </button>
         </div>
       </div>
-      <div className="mainBlock__products">
-        <div className="shopProducts">
-          {showСlothes && renderProducts(clothes, handleAddToCart)}
-          {showBurgers && renderProducts(burgers, handleAddToCart)}
-          {showDrinks && renderProducts(drinks, handleAddToCart)}
+      <div className="mainBlock">
+        <div className="mainBlock__shopsBlock">
+          <div className="mainBlock__shops">
+            <h1 className="shops__title">Shops:</h1>
+            <div className="shops__button">
+              <button
+                className="shops__name"
+                onClick={() => handleButtonClick("drinks")}
+              >
+                Drinks
+              </button>
+              <button
+                className="shops__name"
+                onClick={() => handleButtonClick("burgers")}
+              >
+                Burgers
+              </button>
+              <button
+                className="shops__name"
+                onClick={() => handleButtonClick("clothes")}
+              >
+                Clothes
+              </button>
+            </div>
+          </div>
+          <div
+            style={{
+              position: "fixed",
+              right: "5%",
+              top: "10rem",
+              background: "white",
+              width: "30%",
+            }}
+          >
+            {showCart && (
+              <ShopingCard
+                cartItems={cartItems}
+                handleQuantityChange={handleQuantityChange}
+              />
+            )}
+          </div>
+        </div>
+        <div className="mainBlock__products">
+          <div className="shopProducts">
+            {showСlothes &&
+              renderProducts(filterProducts(clothes), handleAddToCart)}
+            {showBurgers &&
+              renderProducts(filterProducts(burgers), handleAddToCart)}
+            {showDrinks &&
+              renderProducts(filterProducts(drinks), handleAddToCart)}
+          </div>
         </div>
       </div>
-      {showCart && <Cart cartItems={cartItems} />}
     </div>
   );
 }
@@ -100,23 +153,4 @@ function renderProducts(items, handleAddToCart) {
       </button>
     </div>
   ));
-}
-
-function Cart({ cartItems }) {
-  return (
-    <div className="cart">
-      <h2>Cart</h2>
-      {cartItems.length === 0 ? (
-        <p>Cart is empty</p>
-      ) : (
-        <ul>
-          {cartItems.map((item) => (
-            <li key={item.id}>
-              {item.title || item.name} - {item.price}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
 }
