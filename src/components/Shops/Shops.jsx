@@ -6,6 +6,7 @@ import { fetchBurgers } from "../../store/burgersSlice";
 import { fetchDrinks } from "../../store/drinksSlice";
 import { addToCart } from "../../store/cartSlice";
 import ShopingCard from "../ShoppingCard/ShopingCard";
+import { updateQuantity } from "../../store/cartSlice";
 
 export default function Shops() {
   const dispatch = useDispatch();
@@ -57,7 +58,9 @@ export default function Shops() {
       return title.toLowerCase().includes(searchQuery.toLowerCase());
     });
   };
-
+  const handleQuantityChange = (productId, quantity) => {
+    dispatch(updateQuantity({ productId, quantity }));
+  };
   return (
     <div>
       <div className="shops__search">
@@ -67,6 +70,14 @@ export default function Shops() {
           value={searchQuery}
           onChange={handleSearchInputChange}
         />
+        <div className="shops__button">
+          <button
+            className="cart-button"
+            onClick={() => setShowCart(!showCart)}
+          >
+            Shopping Cart ({cartItems.length})
+          </button>
+        </div>
       </div>
       <div className="mainBlock">
         <div className="mainBlock__shopsBlock">
@@ -91,12 +102,24 @@ export default function Shops() {
               >
                 Clothes
               </button>
-              <button className="shops__name" onClick={() => setShowCart(true)}>
-                Cart ({cartItems.length})
-              </button>
             </div>
           </div>
-          <div>{showCart && <ShopingCard cartItems={cartItems} />}</div>
+          <div
+            style={{
+              position: "fixed",
+              right: "5%",
+              top: "10rem",
+              background: "white",
+              width: "30%",
+            }}
+          >
+            {showCart && (
+              <ShopingCard
+                cartItems={cartItems}
+                handleQuantityChange={handleQuantityChange}
+              />
+            )}
+          </div>
         </div>
         <div className="mainBlock__products">
           <div className="shopProducts">
