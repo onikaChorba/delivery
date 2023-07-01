@@ -3,18 +3,21 @@
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 2rem;
+  &__shopsBlock {
+    width: 25%;
+  }
   &__shops {
     border: 1px solid grey;
     border-radius: 10px;
     padding: 1rem;
-    width: 26%;
+    width: 90%;
     height: fit-content;
   }
   &__products {
     border: 1px solid grey;
     border-radius: 10px;
     padding: 1rem;
-    width: 65%;
+    width: 73%;
     height: 80vh;
     overflow-y: scroll;
   }

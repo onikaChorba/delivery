@@ -23,8 +23,11 @@ export default function ShopingCard({ cartItems }) {
               {cartItems.map((item) => (
                 <li key={item.id} className="selectProduct__block">
                   <div>
-                    <div className="selectProduct__img2"></div>
-                    {item.name}
+                    <img
+                      className="selectProduct__img2"
+                      src={item.image || item.img}
+                      alt={item.id}
+                    />
                   </div>
                   <div className="selectProduct__quantity">
                     <button onClick={handleIncrease}>+</button>
