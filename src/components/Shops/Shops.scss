@@ -4,7 +4,7 @@
   justify-content: space-between;
   margin-top: 2rem;
   &__shopsBlock {
-    width: 25%;
+    width: 20%;
   }
   &__shops {
     border: 1px solid grey;
@@ -17,10 +17,21 @@
     border: 1px solid grey;
     border-radius: 10px;
     padding: 1rem;
-    width: 70%;
+    width: 75%;
     height: 80vh;
     overflow-y: scroll;
   }
+}
+
+.shoppingCardSection {
+  position: fixed;
+  right: 6%;
+  top: 10rem;
+  background: white;
+  width: 30%;
+  padding: 1rem;
+  border: 1px solid grey;
+  border-radius: 10px;
 }
 .shops {
   &__button {

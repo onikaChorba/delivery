@@ -1,3 +1,6 @@
+import React from "react";
+import "./ShopingCard.scss";
+
 function ShopingCard({ cartItems, handleQuantityChange }) {
   const handleIncrement = (productId) => {
     handleQuantityChange(productId, 1);
@@ -7,40 +10,60 @@ function ShopingCard({ cartItems, handleQuantityChange }) {
     handleQuantityChange(productId, -1);
   };
 
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    for (const item of cartItems) {
+      totalPrice += item.price * item.quantity;
+    }
+    return totalPrice;
+  };
+
   return (
     <div className="shopingCard">
-      <div className="shopingCardBlock">
-        <div className="shopingCard__selectProduct">
+      <div>
+        <div>
           {cartItems.length === 0 ? (
-            <p>Your cart is empty</p>
+            <p className="shopingCardBlock__price">Your cart is empty</p>
           ) : (
-            <div>
-              <div>
-                Total price: <span>10000</span>
+            <div className="shopingCardBlock">
+              <div className="shopingCardBlock__price">
+                Total price: <span>{calculateTotalPrice()}</span>
               </div>
-              {cartItems.map((item) => (
-                <div key={item.id} className="selectProduct__block">
-                  <div>
-                    <img
-                      style={{ height: "100px" }}
-                      src={item.image || item.img}
-                      alt={item.id}
-                      className="selectProduct__img2"
-                    />
+              <div className="shopingCardBlock__product">
+                {cartItems.map((item) => (
+                  <div key={item.id} className="selectProduct__block">
+                    <div>
+                      <img
+                        src={item.image || item.img}
+                        alt={item.id}
+                        className="selectProduct__img2"
+                      />
+                    </div>
+                    <div className="selectProduct__info">
+                      <h3 className="cart-item__name">
+                        {item.title || item.name}
+                      </h3>
+                      <p className="cart-item__price">
+                        <b>Price: </b>
+                        {item.price * item.quantity}
+                      </p>
+                    </div>
+                    <div className="cart-item__quantity">
+                      <button
+                        onClick={() =>
+                          item.quantity > 0 && handleDecrement(item.id)
+                        }
+                      >
+                        -
+                      </button>
+                      <span className="quantity">{item.quantity}</span>
+                      <button onClick={() => handleIncrement(item.id)}>
+                        +
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="cart-item__name">
-                      {item.title || item.name}
-                    </h3>
-                    <p className="cart-item__price">{item.price}</p>
-                  </div>
-                  <div className="cart-item__quantity">
-                    <button onClick={() => handleDecrement(item.id)}>-</button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => handleIncrement(item.id)}>+</button>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -62,4 +85,5 @@ function ShopingCard({ cartItems, handleQuantityChange }) {
     </div>
   );
 }
+
 export default ShopingCard;
