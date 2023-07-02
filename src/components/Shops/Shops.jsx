@@ -104,22 +104,15 @@ export default function Shops() {
               </button>
             </div>
           </div>
-          <div
-            style={{
-              position: "fixed",
-              right: "5%",
-              top: "10rem",
-              background: "white",
-              width: "30%",
-            }}
-          >
-            {showCart && (
+
+          {showCart && (
+            <div className="shoppingCardSection">
               <ShopingCard
                 cartItems={cartItems}
                 handleQuantityChange={handleQuantityChange}
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
         <div className="mainBlock__products">
           <div className="shopProducts">
