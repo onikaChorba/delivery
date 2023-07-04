@@ -1,13 +1,16 @@
-import React from "react";
 import "./ShopingCard.scss";
 
-function ShopingCard({ cartItems, handleQuantityChange }) {
+function ShopingCard({ cartItems, handleQuantityChange, removeFromCart }) {
   const handleIncrement = (productId) => {
     handleQuantityChange(productId, 1);
   };
 
   const handleDecrement = (productId) => {
     handleQuantityChange(productId, -1);
+  };
+
+  const handleRemove = (productId) => {
+    removeFromCart(productId);
   };
 
   const calculateTotalPrice = () => {
@@ -45,20 +48,19 @@ function ShopingCard({ cartItems, handleQuantityChange }) {
                       </h3>
                       <p className="cart-item__price">
                         <b>Price: </b>
-                        {item.price * item.quantity}
+                        {item.price}
                       </p>
                     </div>
                     <div className="cart-item__quantity">
-                      <button
-                        onClick={() =>
-                          item.quantity > 0 && handleDecrement(item.id)
-                        }
-                      >
+                      <button onClick={() => handleDecrement(item.id)}>
                         -
                       </button>
                       <span className="quantity">{item.quantity}</span>
                       <button onClick={() => handleIncrement(item.id)}>
                         +
+                      </button>
+                      <button onClick={() => handleRemove(item.id)}>
+                        Remove
                       </button>
                     </div>
                   </div>

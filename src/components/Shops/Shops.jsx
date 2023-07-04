@@ -7,7 +7,7 @@ import { fetchDrinks } from "../../store/drinksSlice";
 import { addToCart } from "../../store/cartSlice";
 import ShopingCard from "../ShoppingCard/ShopingCard";
 import { updateQuantity } from "../../store/cartSlice";
-
+import { removeFromCart } from "../../store/cartSlice";
 export default function Shops() {
   const dispatch = useDispatch();
   const { data: clothes, isLoading: clothesLoading } = useSelector(
@@ -110,6 +110,7 @@ export default function Shops() {
               <ShopingCard
                 cartItems={cartItems}
                 handleQuantityChange={handleQuantityChange}
+                removeFromCart={removeFromCart}
               />
             </div>
           )}
