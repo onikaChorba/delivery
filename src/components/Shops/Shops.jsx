@@ -41,7 +41,9 @@ export default function Shops() {
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
   };
-
+  const handleRemove = (productId) => {
+    dispatch(removeFromCart(productId));
+  };
   if (clothesLoading || burgersLoading || drinksLoading) {
     return <h1>Loading....</h1>;
   }
@@ -111,6 +113,7 @@ export default function Shops() {
                 cartItems={cartItems}
                 handleQuantityChange={handleQuantityChange}
                 removeFromCart={removeFromCart}
+                handleRemove={handleRemove}
               />
             </div>
           )}
