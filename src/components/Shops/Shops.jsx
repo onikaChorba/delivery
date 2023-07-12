@@ -8,7 +8,8 @@ import { addToCart } from "../../store/cartSlice";
 import ShopingCard from "../ShoppingCard/ShopingCard";
 import { updateQuantity } from "../../store/cartSlice";
 import { removeFromCart } from "../../store/cartSlice";
-
+import starBlack from "../../assets/img/starBlack.png";
+import starYellow from "../../assets/img/starYellow.png";
 export default function Shops() {
   const dispatch = useDispatch();
   const { data: clothes, isLoading: clothesLoading } = useSelector(
@@ -148,11 +149,11 @@ export default function Shops() {
         <div className="mainBlock__products">
           <div className="shopProducts">
             {showСlothes &&
-              renderProducts(filterProducts(clothes), handleAddToCart)}
+              RenderProducts(filterProducts(clothes), handleAddToCart)}
             {showBurgers &&
-              renderProducts(filterProducts(burgers), handleAddToCart)}
+              RenderProducts(filterProducts(burgers), handleAddToCart)}
             {showDrinks &&
-              renderProducts(filterProducts(drinks), handleAddToCart)}
+              RenderProducts(filterProducts(drinks), handleAddToCart)}
           </div>
         </div>
       </div>
@@ -160,7 +161,7 @@ export default function Shops() {
   );
 }
 
-function renderProducts(items, handleAddToCart) {
+function RenderProducts(items, handleAddToCart) {
   return items?.map((item) => (
     <div key={item.id} className="product">
       <img
@@ -172,9 +173,23 @@ function renderProducts(items, handleAddToCart) {
       <p>
         <b>Price:</b> <span>{item.price}</span>
       </p>
-      <button className="product__button" onClick={() => handleAddToCart(item)}>
-        Add to Cart
-      </button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          width: "90%",
+          marginTop: "20px",
+        }}
+      >
+        <img src={starBlack} alt="like" className="like" />
+        <button
+          className="product__button"
+          onClick={() => handleAddToCart(item)}
+        >
+          Add to Cart
+        </button>
+      </div>
     </div>
   ));
 }
