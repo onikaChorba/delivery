@@ -23,7 +23,10 @@ function ShopingCard({ cartItems, handleQuantityChange, handleRemove }) {
       <div>
         <div>
           {cartItems.length === 0 ? (
-            <p className="shopingCardBlock__price">Your cart is empty</p>
+            <div>
+              <p className="shopingCardBlock__price">Your cart is empty</p>
+              <div>Save product: </div>
+            </div>
           ) : (
             <div className="shopingCardBlock">
               <div className="shopingCardBlock__price">
