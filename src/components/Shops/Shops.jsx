@@ -160,8 +160,11 @@ export default function Shops() {
                 Saved Products ({savedItems.length})
               </button>
               {showSavedItems && (
-                <div className="savedItemsSection" ref={cartRef}>
-                  <SaveProduct savedItems={savedItems} />
+                <div className="savedItemsSection">
+                  <SaveProduct
+                    savedItems={savedItems}
+                    handleAddToCart={handleAddToCart}
+                  />
                 </div>
               )}
               <ShopingCard
