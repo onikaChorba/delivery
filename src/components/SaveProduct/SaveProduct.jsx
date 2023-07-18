@@ -1,6 +1,6 @@
 import React from "react";
 import "../ShoppingCard/ShopingCard.scss";
-export default function SaveProduct({ savedItems }) {
+export default function SaveProduct({ savedItems, handleAddToCart }) {
   return (
     <div className="shopingCard">
       {savedItems.length === 0 ? (
@@ -23,6 +23,12 @@ export default function SaveProduct({ savedItems }) {
                     <b>Price: </b>
                     {item.price}
                   </p>
+                  <button
+                    className="product__button"
+                    onClick={() => handleAddToCart(item)}
+                  >
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             ))}
