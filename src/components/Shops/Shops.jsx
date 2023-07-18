@@ -1,15 +1,21 @@
+import "./Shops.scss";
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./Shops.scss";
 import { fetchСlothes } from "../../store/clothesSlice";
 import { fetchBurgers } from "../../store/burgersSlice";
 import { fetchDrinks } from "../../store/drinksSlice";
-import { addToCart } from "../../store/cartSlice";
+import {
+  addToCart,
+  addToSavedItems,
+  updateQuantity,
+  removeFromCart,
+} from "../../store/cartSlice";
 import ShopingCard from "../ShoppingCard/ShopingCard";
-import { updateQuantity } from "../../store/cartSlice";
-import { removeFromCart } from "../../store/cartSlice";
 import starBlack from "../../assets/img/starBlack.png";
-import starYellow from "../../assets/img/starYellow.png";
+//import starYellow from "../../assets/img/starYellow.png";
+import ShopingForm from "../ShopingForm/ShopingForm";
+import SaveProduct from "../SaveProduct/SaveProduct";
+
 export default function Shops() {
   const dispatch = useDispatch();
   const { data: clothes, isLoading: clothesLoading } = useSelector(
@@ -24,8 +30,9 @@ export default function Shops() {
     (state) => state.drinks
   );
   const [showBurgers, setShowBurgers] = useState(false);
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems, savedItems } = useSelector((state) => state.cart);
   const [showCart, setShowCart] = useState(false);
+  const [showSavedItems, setShowSavedItems] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const cartRef = useRef(null);
 
@@ -45,8 +52,16 @@ export default function Shops() {
     dispatch(addToCart(product));
   };
 
+  const handleAddToSavedItems = (product) => {
+    dispatch(addToSavedItems(product));
+  };
+
   const handleRemove = (productId) => {
     dispatch(removeFromCart(productId));
+  };
+
+  const handleToggleSavedItems = () => {
+    setShowSavedItems(!showSavedItems);
   };
 
   useEffect(() => {
@@ -138,22 +153,46 @@ export default function Shops() {
 
           {showCart && (
             <div className="shoppingCardSection" ref={cartRef}>
+              <button
+                className="saved-items-button"
+                onClick={handleToggleSavedItems}
+              >
+                Saved Products ({savedItems.length})
+              </button>
+              {showSavedItems && (
+                <div className="savedItemsSection" ref={cartRef}>
+                  <SaveProduct savedItems={savedItems} />
+                </div>
+              )}
               <ShopingCard
                 cartItems={cartItems}
                 handleQuantityChange={handleQuantityChange}
                 removeFromCart={handleRemove}
               />
+              <ShopingForm />
             </div>
           )}
         </div>
         <div className="mainBlock__products">
           <div className="shopProducts">
             {showСlothes &&
-              RenderProducts(filterProducts(clothes), handleAddToCart)}
+              RenderProducts(
+                filterProducts(clothes),
+                handleAddToCart,
+                handleAddToSavedItems
+              )}
             {showBurgers &&
-              RenderProducts(filterProducts(burgers), handleAddToCart)}
+              RenderProducts(
+                filterProducts(burgers),
+                handleAddToCart,
+                handleAddToSavedItems
+              )}
             {showDrinks &&
-              RenderProducts(filterProducts(drinks), handleAddToCart)}
+              RenderProducts(
+                filterProducts(drinks),
+                handleAddToCart,
+                handleAddToSavedItems
+              )}
           </div>
         </div>
       </div>
@@ -161,7 +200,7 @@ export default function Shops() {
   );
 }
 
-function RenderProducts(items, handleAddToCart) {
+function RenderProducts(items, handleAddToCart, handleAddToSavedItems) {
   return items?.map((item) => (
     <div key={item.id} className="product">
       <img
@@ -173,16 +212,13 @@ function RenderProducts(items, handleAddToCart) {
       <p>
         <b>Price:</b> <span>{item.price}</span>
       </p>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "90%",
-          marginTop: "20px",
-        }}
-      >
-        <img src={starBlack} alt="like" className="like" />
+      <div className="buttonSave">
+        <img
+          src={starBlack}
+          alt="like"
+          className="like"
+          onClick={() => handleAddToSavedItems(item)}
+        />
         <button
           className="product__button"
           onClick={() => handleAddToCart(item)}
