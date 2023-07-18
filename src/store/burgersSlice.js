@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchBurgers = createAsyncThunk("fetchBurgers", async () => {
   const responce = await fetch(
-    "https://free-food-menus-api-production.up.railway.app/burgers"
+    "https://fakestoreapi.com/products/category/jewelery"
+    // "https://free-food-menus-api-production.up.railway.app/burgers"
   );
   return responce.json();
 });

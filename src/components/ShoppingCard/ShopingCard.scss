@@ -1,13 +1,5 @@
 @import "../../theme/media.scss";
 .shopingCard {
-  &__user {
-    border: 1px solid grey;
-    border-radius: 10px;
-    padding: 1rem;
-    margin-bottom: 2rem;
-    width: 70%;
-    margin: auto;
-  }
   &__selectProduct {
     height: 200px;
     overflow-y: scroll;
@@ -15,12 +7,6 @@
     border-radius: 10px;
     padding: 1rem;
     margin-bottom: 2rem;
-  }
-  &__total {
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    display: flex;
-    justify-content: center;
   }
 }
 .shopingCardBlock {
@@ -36,26 +22,6 @@
     margin: 1rem;
     margin-bottom: 3rem;
   }
-}
-.userLabel {
-  font-size: 18px;
-  font-weight: 700;
-  display: block;
-  width: 100%;
-  margin-top: 0.5rem;
-}
-.userInput {
-  border: 0.5px solid grey;
-  border-radius: 5px;
-  width: 100%;
-  height: 30px;
-}
-.submitBtn {
-  border: 1px solid grey;
-  border-radius: 10px;
-  padding: 1rem;
-  font-size: 20px;
-  font-weight: 700;
 }
 .selectProduct {
   &__block {
