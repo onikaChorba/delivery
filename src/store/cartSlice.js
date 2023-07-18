@@ -55,7 +55,6 @@ const cartSlice = createSlice({
           name,
           title,
           price,
-          quantity: 1,
           img,
           image,
         });

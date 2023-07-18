@@ -8,11 +8,11 @@ import {
   addToCart,
   addToSavedItems,
   updateQuantity,
-  removeFromCart,
 } from "../../store/cartSlice";
+import { removeFromCart } from "../../store/cartSlice";
 import ShopingCard from "../ShoppingCard/ShopingCard";
 import starBlack from "../../assets/img/starBlack.png";
-//import starYellow from "../../assets/img/starYellow.png";
+import starYellow from "../../assets/img/starYellow.png";
 import ShopingForm from "../ShopingForm/ShopingForm";
 import SaveProduct from "../SaveProduct/SaveProduct";
 
@@ -167,7 +167,7 @@ export default function Shops() {
               <ShopingCard
                 cartItems={cartItems}
                 handleQuantityChange={handleQuantityChange}
-                removeFromCart={handleRemove}
+                handleRemove={handleRemove}
               />
               <ShopingForm />
             </div>
@@ -179,19 +179,22 @@ export default function Shops() {
               RenderProducts(
                 filterProducts(clothes),
                 handleAddToCart,
-                handleAddToSavedItems
+                handleAddToSavedItems,
+                savedItems
               )}
             {showBurgers &&
               RenderProducts(
                 filterProducts(burgers),
                 handleAddToCart,
-                handleAddToSavedItems
+                handleAddToSavedItems,
+                savedItems
               )}
             {showDrinks &&
               RenderProducts(
                 filterProducts(drinks),
                 handleAddToCart,
-                handleAddToSavedItems
+                handleAddToSavedItems,
+                savedItems
               )}
           </div>
         </div>
@@ -200,32 +203,41 @@ export default function Shops() {
   );
 }
 
-function RenderProducts(items, handleAddToCart, handleAddToSavedItems) {
-  return items?.map((item) => (
-    <div key={item.id} className="product">
-      <img
-        className="product__img"
-        src={item.image || item.img}
-        alt={item.id}
-      />
-      <h3 className="product__name">{item.title || item.name}</h3>
-      <p>
-        <b>Price:</b> <span>{item.price}</span>
-      </p>
-      <div className="buttonSave">
+function RenderProducts(
+  items,
+  handleAddToCart,
+  handleAddToSavedItems,
+  savedItems
+) {
+  return items?.map((item) => {
+    const isSaved = savedItems.some((savedItem) => savedItem.id === item.id);
+
+    return (
+      <div key={item.id} className="product">
         <img
-          src={starBlack}
-          alt="like"
-          className="like"
-          onClick={() => handleAddToSavedItems(item)}
+          className="product__img"
+          src={item.image || item.img}
+          alt={item.id}
         />
-        <button
-          className="product__button"
-          onClick={() => handleAddToCart(item)}
-        >
-          Add to Cart
-        </button>
+        <h3 className="product__name">{item.title || item.name}</h3>
+        <p>
+          <b>Price:</b> <span>{item.price}</span>
+        </p>
+        <div className="buttonSave">
+          <img
+            src={isSaved ? starYellow : starBlack}
+            alt="like"
+            className="like"
+            onClick={() => handleAddToSavedItems(item)}
+          />
+          <button
+            className="product__button"
+            onClick={() => handleAddToCart(item)}
+          >
+            Add to Cart
+          </button>
+        </div>
       </div>
-    </div>
-  ));
+    );
+  });
 }
